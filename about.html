@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Website</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="logo.png">
+  <style>
+    
+    .section {
+      opacity: 0;
+      transform: translateY(50px); 
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+  
+    
+    .section.show {
+      opacity: 1;
+      transform: translateY(0); 
+    }
+  
+  </style>
+  
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li> 
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section  class="section">
+    <h2 style="font-size: 30px;">About</h2>
+    <div class="text-box">
+        <p>I'm currently a second-year student pursuing a Bachelor of Science in Information Technology. My passion for technology led me to choose this program, and I'm committed to expanding my knowledge and skills in this ever-evolving field. Right now, I'm focusing on web development and studying HTML5 application development. To validate my skills, I've earned a certification in HTML and CSS, and I'm actively working on completing certifications in HTML5 Application Development and Database Management. I enjoy combining creativity with technical expertise, and I'm eager to apply my knowledge through hands-on projects. As I continue to progress in my studies, I'm excited about the opportunities to build and refine my skills in both web development and broader IT areas.</p>
+    </div>
+  </section>
+  <div class="bot">
+    <div class="chatbot">
+      <div class="chat-header" onclick="toggleChatBody()">Chat with us!</div>
+      <div class="chat-body" id="chatBody">
+          <div id="chatMessages"></div>
+          <div class="chat-footer">
+              <input type="text" id="userInput" placeholder="Type a message..." onkeypress="handleEnterKey(event)">
+              <button onclick="sendMessage()">Send</button>
+          </div>
+      </div>
+  </div>
+  <script>
+    
+    window.addEventListener("DOMContentLoaded", () => {
+      const sections = document.querySelectorAll(".section");
+      sections.forEach(section => section.classList.add("show"));
+    });
+  </script>
+  <script>
+    const chatBody = document.getElementById('chatBody');
+  
+  function toggleChatBody() {
+    console.log("Header clicked!");
+    chatBody.style.display = chatBody.style.display === 'block' ? 'none' : 'block';
+  }
+  
+  
+        function handleEnterKey(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+  
+        const chatMessages = document.getElementById('chatMessages');
+  
+        function appendMessage(content, className) {
+            const messageDiv = document.createElement('div');
+            messageDiv.textContent = content;
+            messageDiv.className = `message ${className}`;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+  
+        function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const userMessage = userInput.value.trim();
+  
+            if (userMessage) {
+                appendMessage(userMessage, 'user-message');
+                userInput.value = '';
+                botReply(userMessage);
+            }
+        }
+  
+        function botReply(message) {
+            const lowerCaseMessage = message.toLowerCase();
+            let botMessage;
+  
+            if (lowerCaseMessage.includes('hello')) {
+                botMessage = 'Hi there! How can I help you today?';
+            } else if (lowerCaseMessage.includes('how are you')) {
+                botMessage = 'I am just a bot, but I am doing great! How about you?';
+            } else if (lowerCaseMessage.includes('bye')) {
+                botMessage = 'Goodbye! Have a great day!';
+            } else {
+                botMessage = "I'm not sure how to respond to that. Can you rephrase?";
+            }
+  
+            appendMessage(botMessage, 'bot-message');
+        }
+  
+  
+  </script>
+</body>
+</html>
+
+

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Website</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="logo.png">
+  <style>
+    #home {
+     opacity: 0;
+     transform: translateX(-100%); 
+     transition: opacity 0.5s ease, transform 0.5s ease;
+   }
+ 
+   
+   #home.show {
+     opacity: 1;
+     transform: translateX(0); 
+   }
+ </style>
+</head>
+
+<body>
+  <header class="header">
+    <nav class="nav">
+      <ul>
+        <li><a href="#index">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="home" class="section">
+    <div class="name">
+      <h1>Yule Antommy A. Noble</h1>
+      <p>2nd Year Student | Bachelor of Science in Information Technology</p>
+      <span style="font-size: 15px;">
+        <a href="mailto:>yanoble29@gmail.com">yanoble29@gmail.com</a><br>
+        <a href="tel:+63 9231846869">+63 9231846869</a>
+      </span>
+    </div>
+    <img src="1x1.jpg" alt="Profile Picture" class="profile-pic">
+  </section>
+
+  <div class="bot">
+    <div class="chatbot">
+      <div class="chat-header" onclick="toggleChatBody()">Chat with us!</div>
+      <div class="chat-body" id="chatBody">
+        <div id="chatMessages"></div>
+        <div class="chat-footer">
+          <input type="text" id="userInput" placeholder="Type a message..." onkeypress="handleEnterKey(event)">
+          <button onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      const homeSection = document.querySelector("#home");
+      homeSection.classList.add("show");
+    });
+
+    const chatBody = document.getElementById('chatBody');
+
+    function toggleChatBody() {
+      console.log("Header clicked!");
+      chatBody.style.display = chatBody.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function handleEnterKey(event) {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    }
+
+    const chatMessages = document.getElementById('chatMessages');
+
+    function appendMessage(content, className) {
+      const messageDiv = document.createElement('div');
+      messageDiv.textContent = content;
+      messageDiv.className = `message ${className}`;
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function sendMessage() {
+      const userInput = document.getElementById('userInput');
+      const userMessage = userInput.value.trim();
+
+      if (userMessage) {
+        appendMessage(userMessage, 'user-message');
+        userInput.value = '';
+        botReply(userMessage);
+      }
+    }
+
+    function botReply(message) {
+      const lowerCaseMessage = message.toLowerCase();
+      let botMessage;
+
+      if (lowerCaseMessage.includes('hello')) {
+        botMessage = 'Hi there! How can I help you today?';
+      } else if (lowerCaseMessage.includes('how are you')) {
+        botMessage = 'I am just a bot, but I am doing great! How about you?';
+      } else if (lowerCaseMessage.includes('bye')) {
+        botMessage = 'Goodbye! Have a great day!';
+      } else {
+        botMessage = "I'm not sure how to respond to that. Can you rephrase?";
+      }
+
+      appendMessage(botMessage, 'bot-message');
+    }
+  </script>
+</body>
+
+</html>
